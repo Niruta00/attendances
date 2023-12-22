@@ -1,4 +1,4 @@
-# attendances
+# attendu
 
 A new Flutter project.
 
