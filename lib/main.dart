@@ -1,13 +1,22 @@
+import 'package:attendu/core/routes/router_generator.dart';
+import 'package:attendu/firebase_options.dart';
 import 'package:attendu/locator.dart';
 import 'package:attendu/model/app_db.dart';
+import 'package:attendu/view/login_view/login_with_phone.dart';
+import 'package:attendu/view/login_view/loginwithgoogle.dart';
+import 'package:attendu/view/login_view/otp_verify.dart';
 import 'package:attendu/view_model/college_view_model.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'view/home_view.dart';
 import 'view_model/student_view_model.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   setup();
   runApp(const MyApp());
 }
@@ -26,30 +35,17 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (_) => HomeViewModel()),
         ChangeNotifierProvider(create: (_) => StudentViewModel()),
+        // ChangeNotifierProvider(create: (_) => PhoneLoginViewModel()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
+        onGenerateRoute: (settings) => Routegenerator.getRoute(settings),
         theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // TRY THIS: Try running your application with "flutter run". You'll see
-          // the application has a blue toolbar. Then, without quitting the app,
-          // try changing the seedColor in the colorScheme below to Colors.green
-          // and then invoke "hot reload" (save your changes or press the "hot
-          // reload" button in a Flutter-supported IDE, or press "r" if you used
-          // the command line to start the app).
-          //
-          // Notice that the counter didn't reset back to zero; the application
-          // state is not lost during the reload. To reset the state, use hot
-          // restart instead.
-          //
-          // This works for code too, not just values: Most code changes can be
-          // tested with just a hot reload.
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const HomeView(),
+        home: LoginwithGoogle(),
       ),
     );
   }

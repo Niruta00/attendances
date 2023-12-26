@@ -1,3 +1,4 @@
+import 'package:attendu/core/themes/app_color.dart';
 import 'package:attendu/model/app_db.dart';
 import 'package:attendu/view/widgets/custom_text_field.dart';
 import 'package:drift/drift.dart' as d;
@@ -42,6 +43,7 @@ class _StudentEntryFormState extends State<StudentEntryForm> {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: AppColors.primaryColor,
           title: Text("Student Form"),
         ),
         body: Consumer<StudentViewModel>(
@@ -49,35 +51,59 @@ class _StudentEntryFormState extends State<StudentEntryForm> {
             return SingleChildScrollView(
                 child: Form(
               key: _formKey,
-              child: Column(
-                children: [
-                  CustomTextField(
-                    label: "Enter student Name",
-                    controller: _nameController,
-                  ),
-                  CustomTextField(
-                    label: "Enter student roll no.",
-                    controller: _rollController,
-                    keyboardType: TextInputType.number,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      StudentCompanion data = StudentCompanion(
-                        studentName: d.Value(_nameController.text),
-                        rollNo: d.Value(int.parse(_rollController.text)),
-                        collegeId: d.Value(widget.collegeId ??
-                            0), // Provide a default value or handle accordingly
-                      );
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Column(
+                      children: [
+                        CustomTextField(
+                          label: "Enter student Name",
+                          controller: _nameController,
+                        ),
+                        CustomTextField(
+                          label: "Enter student roll no.",
+                          controller: _rollController,
+                          keyboardType: TextInputType.number,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            height: 45,
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                StudentCompanion data = StudentCompanion(
+                                  studentName: d.Value(_nameController.text),
+                                  rollNo:
+                                      d.Value(int.parse(_rollController.text)),
+                                  collegeId: d.Value(widget.collegeId ??
+                                      0), // Provide a default value or handle accordingly
+                                );
 
-                      widget.studentData == null
-                          ? studentViewModel.addStudent(data)
-                          : studentViewModel.updateStudent(data);
+                                widget.studentData == null
+                                    ? studentViewModel.addStudent(data)
+                                    : studentViewModel.updateStudent(data);
 
-                      Navigator.pop(context);
-                    },
-                    child: Text(widget.studentData == null ? "Save" : "Update"),
-                  )
-                ],
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                widget.studentData == null ? "Save" : "Update",
+                                style: TextStyle(color: AppColors.white),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: AppColors.primaryColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ));
           },

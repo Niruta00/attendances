@@ -1,13 +1,20 @@
+import 'package:attendu/core/themes/app_color.dart';
 import 'package:attendu/model/app_db.dart';
+import 'package:attendu/view/forms/college_data.dart';
 import 'package:attendu/view/forms/student_entry.dart';
-import 'package:attendu/view/student_view.dart';
+import 'package:attendu/view/home_view/student_view.dart';
 import 'package:attendu/view_model/student_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeCard extends StatelessWidget {
-  const HomeCard({super.key, this.collegeData});
+  const HomeCard({
+    super.key,
+    this.collegeData,
+    // this.index,
+  });
   final CollegeDataData? collegeData;
+//  final int? index;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +23,7 @@ class HomeCard extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: SizedBox(
           child: GestureDetector(
-            onLongPress: () {
+            onTap: () {
               showDialog(
                   context: context,
                   builder: (_) => AlertDialog(
@@ -35,7 +42,7 @@ class HomeCard extends StatelessWidget {
                                         builder: (context) => StudentsView()));
                               },
                               child: Text("View Students"),
-                            )
+                            ),
                           ],
                         ),
                       ));
@@ -69,58 +76,89 @@ class HomeCard extends StatelessWidget {
                   border: Border.all(color: Colors.grey)),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    RichText(
-                      text: TextSpan(
-                        style: DefaultTextStyle.of(context).style,
-                        children: [
-                          TextSpan(
-                            text: 'College Name: ',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            style: DefaultTextStyle.of(context).style,
+                            children: [
+                              TextSpan(
+                                text: 'College Name: ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(text: collegeData!.collegeName),
+                            ],
                           ),
-                          TextSpan(text: collegeData!.collegeName),
-                        ],
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        style: DefaultTextStyle.of(context).style,
-                        children: [
-                          TextSpan(
-                            text: 'Faculty Name: ',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(text: collegeData!.facultyName),
-                        ],
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        style: DefaultTextStyle.of(context).style,
-                        children: [
-                          TextSpan(
-                            text: 'Semester: ',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(text: collegeData!.semesterName),
-                        ],
-                      ),
-                    ),
-                    if (collegeData!.subjectName != null)
-                      RichText(
-                        text: TextSpan(
-                          style: DefaultTextStyle.of(context).style,
-                          children: [
-                            TextSpan(
-                              text: 'Subject: ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            TextSpan(text: collegeData!.subjectName!),
-                          ],
                         ),
-                      ),
+                        RichText(
+                          text: TextSpan(
+                            style: DefaultTextStyle.of(context).style,
+                            children: [
+                              TextSpan(
+                                text: 'Faculty Name: ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(text: collegeData!.facultyName),
+                            ],
+                          ),
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            style: DefaultTextStyle.of(context).style,
+                            children: [
+                              TextSpan(
+                                text: 'Semester: ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(text: collegeData!.semesterName),
+                            ],
+                          ),
+                        ),
+                        if (collegeData!.subjectName != null)
+                          RichText(
+                            text: TextSpan(
+                              style: DefaultTextStyle.of(context).style,
+                              children: [
+                                TextSpan(
+                                  text: 'Subject: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                TextSpan(text: collegeData!.subjectName!),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit, color: AppColors.primaryColor),
+                          onPressed: () {
+                            studentViewModel
+                                .fetchCollegeDataById(collegeData!.id);
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CollegeDataForm(),
+                              ),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () async {
+                            await studentViewModel
+                                .deleteStudent(collegeData!.id);
+                            studentViewModel.fetchAllStudents();
+                          },
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),

@@ -1,6 +1,7 @@
+import 'package:attendu/core/themes/app_color.dart';
 import 'package:attendu/model/app_db.dart';
 import 'package:attendu/view/forms/student_entry.dart';
-import 'package:attendu/view/student_view.dart';
+import 'package:attendu/view/home_view/student_view.dart';
 import 'package:attendu/view_model/student_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,6 @@ class _StudentCardState extends State<StudentCard> {
   Color? containerColor;
   bool? isPresent; // Default to null state
   int totalDays = 0;
-
   @override
   Widget build(BuildContext context) {
     containerColor ??= null; // Initialize to null if not set
@@ -89,6 +89,7 @@ class _StudentCardState extends State<StudentCard> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
+                            backgroundColor: AppColors.primaryColor,
                             child: Text(widget.studentData!.rollNo.toString()),
                           ),
                         ),
@@ -98,41 +99,46 @@ class _StudentCardState extends State<StudentCard> {
                           padding: const EdgeInsets.only(right: 8),
                           child: Column(
                             children: [
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        containerColor = Colors.green;
-                                        isPresent = true;
-                                        totalDays++;
-                                      });
-                                    },
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      child: Icon(
-                                        Icons.check,
-                                        color: Colors.green,
+                              Padding(
+                                padding: const EdgeInsets.only(top: 4),
+                                child: Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          containerColor = Colors.green;
+                                          isPresent = true;
+                                          totalDays++;
+                                        });
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 15,
+                                        backgroundColor: Colors.white,
+                                        child: Icon(
+                                          Icons.check,
+                                          color: Colors.green,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(width: 8),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        containerColor = Colors.red;
-                                        isPresent = false;
-                                      });
-                                    },
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      child: Icon(
-                                        Icons.close,
-                                        color: Colors.red,
+                                    SizedBox(width: 8),
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          containerColor = Colors.red;
+                                          isPresent = false;
+                                        });
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 15,
+                                        backgroundColor: Colors.white,
+                                        child: Icon(
+                                          Icons.close,
+                                          color: Colors.red,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               SizedBox(height: 8),
                               Text('Total Days: $totalDays'),

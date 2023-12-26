@@ -1,5 +1,5 @@
+import 'package:attendu/core/themes/app_color.dart';
 import 'package:attendu/model/app_db.dart';
-import 'package:attendu/model/db_models.dart';
 import 'package:attendu/utils/widgets/home_card.dart';
 import 'package:attendu/view/forms/college_data.dart';
 import 'package:attendu/view_model/college_view_model.dart';
@@ -11,14 +11,15 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // HomeViewModel homeViewModel =
-    //     Provider.of<HomeViewModel>(context, listen: false);
+
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: AppColors.primaryColor,
           title: const Text("Admin Detail"),
           centerTitle: true,
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: AppColors.primaryColor,
           onPressed: () {
             // homeViewModel.switchVisibility();
             Navigator.push(
@@ -41,6 +42,7 @@ class HomeView extends StatelessWidget {
                   itemCount: collegeData.length,
                   itemBuilder: (context, index) {
                     return HomeCard(
+                       
                       collegeData: collegeData[index],
                     );
                   });

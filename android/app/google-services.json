@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "467198558566",
+    "project_id": "niruta-hot-project",
+    "storage_bucket": "niruta-hot-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467198558566:android:b17f672364bb6bc377c8a7",
+        "android_client_info": {
+          "package_name": "com.example.attendu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4hemMQ26GmV6ztA3-C-ZsLowlUJhaBkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

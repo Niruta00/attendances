@@ -1,3 +1,4 @@
+import 'package:attendu/core/themes/app_color.dart';
 import 'package:attendu/model/app_db.dart';
 import 'package:attendu/utils/widgets/student_card.dart';
 import 'package:attendu/view/forms/student_entry.dart';
@@ -12,9 +13,11 @@ class StudentsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
         title: Text("Students View"),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.primaryColor,
         onPressed: () {
           Navigator.push(
             context,
@@ -26,7 +29,7 @@ class StudentsView extends StatelessWidget {
       body: Consumer<StudentViewModel>(
         builder: (_, studentViewModel, __) {
           return FutureBuilder<List<StudentData>>(
-            future: studentViewModel.fetchStudentData(), // Assuming fetchStudentData returns a Future<List<StudentData>>
+            future: studentViewModel.fetchStudentData(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());

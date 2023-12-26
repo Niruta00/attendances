@@ -1,8 +1,9 @@
 import 'dart:ffi';
 
+import 'package:attendu/core/themes/app_color.dart';
 import 'package:attendu/model/app_db.dart';
 import 'package:attendu/repository/college_data.dart';
-import 'package:attendu/view/home_view.dart';
+import 'package:attendu/view/home_view/home_view.dart';
 import 'package:attendu/view/widgets/custom_text_field.dart';
 import 'package:attendu/view_model/college_view_model.dart';
 import 'package:drift/drift.dart' as dr;
@@ -48,48 +49,72 @@ class _CollegeDataFormState extends State<CollegeDataForm> {
     HomeViewModel homeViewModel = Provider.of<HomeViewModel>(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
         title: const Text("College data"),
       ),
       body: SingleChildScrollView(
           child: Form(
         key: _formKey,
-        child: Column(
-          children: [
-            CustomTextField(
-              controller: _collegeNameController,
-              hinttext: "Please enter college name",
-              label: "College Name",
-            ),
-            CustomTextField(
-              controller: _facultyController,
-              hinttext: "Please enter faculty name",
-              label: "Faculty  Name",
-            ),
-            CustomTextField(
-              controller: _semesterController,
-              hinttext: "Please enter semester name",
-              label: "Semester Name",
-            ),
-            CustomTextField(
-              controller: _subjectController,
-              hinttext: "Please enter subject  name",
-              label: "Subject name",
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  CollegeDataCompanion data = CollegeDataCompanion(
-                      collegeName: dr.Value(_collegeNameController.text),
-                      facultyName: dr.Value(_facultyController.text),
-                      semesterName: dr.Value(_semesterController.text),
-                      subjectName: dr.Value(_subjectController.text));
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              CustomTextField(
+                controller: _collegeNameController,
+                hinttext: "Please enter college name",
+                label: "College Name",
+              ),
+              CustomTextField(
+                controller: _facultyController,
+                hinttext: "Please enter faculty name",
+                label: "Faculty  Name",
+              ),
+              CustomTextField(
+                controller: _semesterController,
+                hinttext: "Please enter semester name",
+                label: "Semester Name",
+              ),
+              CustomTextField(
+                controller: _subjectController,
+                hinttext: "Please enter subject  name",
+                label: "Subject name",
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 45,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      CollegeDataCompanion data = CollegeDataCompanion(
+                          collegeName: dr.Value(_collegeNameController.text),
+                          facultyName: dr.Value(_facultyController.text),
+                          semesterName: dr.Value(_semesterController.text),
+                          subjectName: dr.Value(_subjectController.text));
 
-                  widget.collegeDataData == null
-                      ? homeViewModel.addCollegeData(data)
-                      : homeViewModel.updateCollegeData(data);
-                  Navigator.pop(context);
-                },
-                child: Text(widget.collegeDataData == null ? "Save" : "Update"))
-          ],
+                      widget.collegeDataData == null
+                          ? homeViewModel.addCollegeData(data)
+                          : homeViewModel.updateCollegeData(data);
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      widget.collegeDataData == null ? "Save" : "Update",
+                      style: TextStyle(color: AppColors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       )),
     );

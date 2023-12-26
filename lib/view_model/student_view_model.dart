@@ -63,4 +63,23 @@ class StudentViewModel extends ChangeNotifier {
       return [];
     }
   }
+
+void saveStudentDataByIndex(int collegeId, int cardIndex) {
+  // Check if the cardIndex is within the bounds of your _studentData list
+  if (cardIndex >= 0 && cardIndex < _studentData.length) {
+    // Fetch the student data based on the index of the card
+    StudentData student = _studentData[cardIndex];
+
+    // Perform any additional logic or save the data as needed
+    // For example, you might set the selected student in your ViewModel
+    _selectedStudent = student;
+
+    // Notify listeners if needed
+    notifyListeners();
+  } else {
+    print('Invalid card index: $cardIndex');
+  }
+}
+
+
 }
