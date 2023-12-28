@@ -3,7 +3,7 @@ import 'package:attendu/model/app_db.dart';
 import 'package:attendu/view/forms/college_data.dart';
 import 'package:attendu/view/forms/student_entry.dart';
 import 'package:attendu/view/home_view/student_view.dart';
-import 'package:attendu/view_model/student_view_model.dart';
+import 'package:attendu/view_model/college_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +18,7 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<StudentViewModel>(builder: (_, studentViewModel, __) {
+    return Consumer<HomeViewModel>(builder: (_, homeViewModel, __) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: SizedBox(
@@ -31,8 +31,7 @@ class HomeCard extends StatelessWidget {
                           children: [
                             InkWell(
                               onTap: () {
-                                studentViewModel
-                                    .fetchStudentsByCollegeId(collegeData!.id);
+                                homeViewModel.fetchCollegeData();
 
                                 Navigator.pop(context);
 
@@ -48,18 +47,13 @@ class HomeCard extends StatelessWidget {
                       ));
             },
             onPanUpdate: (details) {
-              // right swipt
-              if (details.delta.dx > 0) {
-                // showDialog(context: context, builder: (context) => AlertDialog(
-                //   title: text,
-                // ));
-              }
+              if (details.delta.dx > 0) {}
 
               // Swiping in left direction.
               if (details.delta.dx < 0) {
-                StudentViewModel studentViewModel =
-                    Provider.of<StudentViewModel>(context, listen: false);
-                studentViewModel.fetchCollegeDataById(collegeData!.id);
+                HomeViewModel homeViewModel =
+                    Provider.of<HomeViewModel>(context, listen: false);
+                homeViewModel.fetchCollegeData();
 
                 Navigator.push(
                     context,
@@ -138,8 +132,9 @@ class HomeCard extends StatelessWidget {
                         IconButton(
                           icon: Icon(Icons.edit, color: AppColors.primaryColor),
                           onPressed: () {
-                            studentViewModel
-                                .fetchCollegeDataById(collegeData!.id);
+                            homeViewModel.fetchCollegeData();
+                            // studentViewModel
+                            //     .fetchCollegeDataById(collegeData!.id);
 
                             Navigator.push(
                               context,
@@ -152,9 +147,8 @@ class HomeCard extends StatelessWidget {
                         IconButton(
                           icon: Icon(Icons.delete, color: Colors.red),
                           onPressed: () async {
-                            await studentViewModel
-                                .deleteStudent(collegeData!.id);
-                            studentViewModel.fetchAllStudents();
+                            await homeViewModel.deleteCollegedata(collegeData!.id);
+                       
                           },
                         ),
                       ],

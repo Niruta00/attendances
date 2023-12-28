@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  final int? collegeId;
+  const HomeView({super.key,  this.collegeId});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.primaryColor,
@@ -42,7 +42,6 @@ class HomeView extends StatelessWidget {
                   itemCount: collegeData.length,
                   itemBuilder: (context, index) {
                     return HomeCard(
-                       
                       collegeData: collegeData[index],
                     );
                   });

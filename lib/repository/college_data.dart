@@ -1,4 +1,3 @@
-import 'package:attendu/model/db_models.dart';
 import 'package:logger/logger.dart';
 
 import '../locator.dart';

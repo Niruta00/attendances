@@ -1,14 +1,15 @@
 import 'package:attendu/core/themes/app_color.dart';
 import 'package:attendu/model/app_db.dart';
 import 'package:attendu/view/forms/student_entry.dart';
-import 'package:attendu/view/home_view/student_view.dart';
 import 'package:attendu/view_model/student_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class StudentCard extends StatefulWidget {
-  const StudentCard({Key? key, this.studentData}) : super(key: key);
+  const StudentCard({Key? key, this.collegeId, this.studentData})
+      : super(key: key);
   final StudentData? studentData;
+  final int? collegeId;
 
   @override
   _StudentCardState createState() => _StudentCardState();
@@ -36,16 +37,10 @@ class _StudentCardState extends State<StudentCard> {
                       children: [
                         InkWell(
                           onTap: () {
-                            studentViewModel.fetchStudentById(
+                            studentViewModel.fetchStudentsByCollegeId(
                                 widget.studentData!.collegeId);
-                            Navigator.pop(context);
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => StudentsView(),
-                              ),
-                            );
+                            // studentViewModel.fetchCollegeDataById(
+                            //     widget.studentData!.collegeId);
                           },
                           child: Text("View Students"),
                         )
@@ -63,7 +58,7 @@ class _StudentCardState extends State<StudentCard> {
                 // Left swipe
                 if (panDetails.delta.dx < 0) {
                   studentViewModel
-                      .fetchStudentById(widget.studentData!.collegeId);
+                      .fetchStudentsByCollegeId(widget.studentData!.collegeId);
 
                   Navigator.push(
                     context,
@@ -87,7 +82,7 @@ class _StudentCardState extends State<StudentCard> {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(4.0),
                           child: CircleAvatar(
                             backgroundColor: AppColors.primaryColor,
                             child: Text(widget.studentData!.rollNo.toString()),
@@ -96,7 +91,7 @@ class _StudentCardState extends State<StudentCard> {
                         Text(widget.studentData!.studentName),
                         Spacer(),
                         Padding(
-                          padding: const EdgeInsets.only(right: 8),
+                          padding: const EdgeInsets.only(right: 10),
                           child: Column(
                             children: [
                               Padding(
@@ -120,7 +115,7 @@ class _StudentCardState extends State<StudentCard> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(width: 8),
+                                    SizedBox(width: 5),
                                     GestureDetector(
                                       onTap: () {
                                         setState(() {
@@ -137,10 +132,20 @@ class _StudentCardState extends State<StudentCard> {
                                         ),
                                       ),
                                     ),
+                                    IconButton(
+                                      icon: Icon(Icons.delete,
+                                          color: const Color.fromARGB(
+                                              255, 232, 194, 191)),
+                                      onPressed: () async {
+                                        await studentViewModel.deleteStudent(
+                                            widget.studentData!.rollNo);
+                                        // .deleteStudentdata(collegeData!.id);
+                                      },
+                                    ),
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 8),
+                              SizedBox(height: 1),
                               Text('Total Days: $totalDays'),
                             ],
                           ),

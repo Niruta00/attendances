@@ -23,6 +23,8 @@ class StudentEntryForm extends StatefulWidget {
 class _StudentEntryFormState extends State<StudentEntryForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _rollController = TextEditingController();
+  final TextEditingController _collegeIdController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -34,6 +36,8 @@ class _StudentEntryFormState extends State<StudentEntryForm> {
       StudentData data = widget.studentData!;
       _nameController.text = data.studentName;
       _rollController.text = data.rollNo.toString();
+      _collegeIdController.text = data.collegeId.toString();
+
     }
   }
 
@@ -57,6 +61,12 @@ class _StudentEntryFormState extends State<StudentEntryForm> {
                   children: [
                     Column(
                       children: [
+                             CustomTextField(
+                          label: "Enter college id",
+                          controller: _collegeIdController,
+                          keyboardType: TextInputType.number,
+
+                        ),
                         CustomTextField(
                           label: "Enter student Name",
                           controller: _nameController,

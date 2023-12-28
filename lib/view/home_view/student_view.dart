@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class StudentsView extends StatelessWidget {
-  const StudentsView({Key? key});
+  final int? collegeId;
+
+  StudentsView({Key? key, this.collegeId});
 
   @override
   Widget build(BuildContext context) {
@@ -29,24 +31,31 @@ class StudentsView extends StatelessWidget {
       body: Consumer<StudentViewModel>(
         builder: (_, studentViewModel, __) {
           return FutureBuilder<List<StudentData>>(
-            future: studentViewModel.fetchStudentData(),
+            future: studentViewModel.getStudentsByCollegeId(
+                collegeId ?? 0), // Using collegeId with a default value of 0
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Center(child: Text("Error: ${snapshot.error}"));
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Center(child: Text("No student data available."));
               } else {
-                List<StudentData> studentData = snapshot.data!;
-                return ListView.builder(
-                  itemCount: studentData.length,
-                  itemBuilder: (context, index) {
-                    return StudentCard(
-                      studentData: studentData[index],
-                    );
-                  },
-                );
+                List<StudentData> studentData = snapshot.data ?? [];
+
+                if (studentData.isEmpty) {
+                  return const Center(
+                    child: Text("No students available for this college"),
+                  );
+                } else {
+                  return ListView.builder(
+                    itemCount: studentData.length,
+                    itemBuilder: (context, index) {
+                      return StudentCard(
+                        collegeId: collegeId,
+                        studentData: studentData[index],
+                      );
+                    },
+                  );
+                }
               }
             },
           );
