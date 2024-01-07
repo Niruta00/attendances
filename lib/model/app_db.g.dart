@@ -55,9 +55,10 @@ class $CollegeDataTable extends CollegeData
   List<GeneratedColumn> get $columns =>
       [id, collegeName, facultyName, semesterName, subjectName];
   @override
-  String get aliasedName => _alias ?? 'college_data';
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  String get actualTableName => 'college_data';
+  String get actualTableName => $name;
+  static const String $name = 'college_data';
   @override
   VerificationContext validateIntegrity(Insertable<CollegeDataData> instance,
       {bool isInserting = false}) {
@@ -345,9 +346,10 @@ class $StudentTable extends Student with TableInfo<$StudentTable, StudentData> {
   @override
   List<GeneratedColumn> get $columns => [collegeId, rollNo, studentName];
   @override
-  String get aliasedName => _alias ?? 'student';
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  String get actualTableName => 'student';
+  String get actualTableName => $name;
+  static const String $name = 'student';
   @override
   VerificationContext validateIntegrity(Insertable<StudentData> instance,
       {bool isInserting = false}) {
@@ -555,9 +557,10 @@ class $AttendanceTable extends Attendance
   @override
   List<GeneratedColumn> get $columns => [attendanceDate, isPresent];
   @override
-  String get aliasedName => _alias ?? 'attendance';
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  String get actualTableName => 'attendance';
+  String get actualTableName => $name;
+  static const String $name = 'attendance';
   @override
   VerificationContext validateIntegrity(Insertable<AttendanceData> instance,
       {bool isInserting = false}) {

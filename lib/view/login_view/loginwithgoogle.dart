@@ -18,96 +18,110 @@ class _LoginwithGoogleState extends State<LoginwithGoogle> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(left: 25, right: 25),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                AssetsPath.atendu,
-                height: 300,
+      backgroundColor: AppColors.primaryColor.withOpacity(0.8),
+      body: ListView(
+        physics: NeverScrollableScrollPhysics(),
+        children: [
+          Container(
+            margin: EdgeInsets.only(left: 25, right: 25, top: 95),
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    AssetsPath.logwithg,
+                    height: 300,
+                  ),
+                ],
               ),
-              Text(
-                "Google Verification",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(50),
+                topRight: Radius.circular(50),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "We need to register your Google Account before get started!",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              // Container(
-              //   height: 55,
-              //   decoration: BoxDecoration(
-              //     border: Border.all(width: 1, color: Colors.grey),
-              //     borderRadius: BorderRadius.circular(10),
-              //   ),
-              //   child: Row(
-              //     children: [
-              //       Expanded(
-              //         child: TextField(
-              //           cursorColor: AppColors.primaryColor,
-              //           onChanged: (value) {
-              //             // phone = value;
-              //           },
-              //           style: TextStyle(
-              //             fontSize: 20,
-              //           ),
-              //           decoration: InputDecoration(
-              //             border: InputBorder.none,
-              //             hintText: "",
-              //           ),
-              //         ),
-              //       )
-              //     ],
-              //   ),
-              // ),
-              SizedBox(
-                height: 50,
-              ),
-              SizedBox(
-                height: 45,
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    await FirebaseAuthService().logininwithgoogle();
-                    if (FirebaseAuth.instance.currentUser != null) {
-                      if (!mounted) return;
-                      Navigator.pushNamed(context, Routes.home);
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
+              color: Colors.white,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                children: [
+                  SizedBox(height: 30,),
+                  Text(
+                    "Google Verification",
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "We need to register your Google Account before get started!",
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  SizedBox(
+                    height: 45,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await FirebaseAuthService().logininwithgoogle();
+                        if (FirebaseAuth.instance.currentUser != null) {
+                          if (!mounted) return;
+                          Navigator.pushNamed(context, Routes.home);
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
                                 title: Text("No user exist"),
                               ));
-                    }
-                    // await phoneViewModel.loginWithPhone(context, phone);
-                  },
-                  child: Text(
-                    "Login with Google",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: AppColors.primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                        }
+                        // await phoneViewModel.loginWithPhone(context, phone);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            AssetsPath.google,
+                            height: 30,
+                            width: 30,
+                          ),
+                          SizedBox(width: 10,),
+                          Text(
+                            "Login with Google",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(Icons.arrow_forward,color: Colors.white,),
+                          )
+                        ],
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: AppColors.primaryColor.withOpacity(0.8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

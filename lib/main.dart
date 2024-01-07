@@ -2,9 +2,7 @@ import 'package:attendu/core/routes/router_generator.dart';
 import 'package:attendu/firebase_options.dart';
 import 'package:attendu/locator.dart';
 import 'package:attendu/model/app_db.dart';
-import 'package:attendu/view/login_view/login_with_phone.dart';
 import 'package:attendu/view/login_view/loginwithgoogle.dart';
-import 'package:attendu/view/login_view/otp_verify.dart';
 import 'package:attendu/view_model/college_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +33,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (_) => HomeViewModel()),
         ChangeNotifierProvider(create: (_) => StudentViewModel()),
-        // ChangeNotifierProvider(create: (_) => PhoneLoginViewModel()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
