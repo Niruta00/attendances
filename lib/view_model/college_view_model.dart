@@ -46,10 +46,5 @@ class HomeViewModel extends ChangeNotifier {
     _collegeData = await CollegeDataRepo().fetchCollegeData();
     notifyListeners();
   }
-  // refreshCollegeDataa() async {
-  //   print("Fetch College called");
 
-  //   _collegeData = await CollegeDataRepo().fetchCollegeData();
-  //   // notifyListeners();
-  // }
 }

@@ -2,9 +2,11 @@ import 'package:attendu/core/themes/app_color.dart';
 import 'package:attendu/model/app_db.dart';
 import 'package:attendu/view/forms/student_entry.dart';
 import 'package:attendu/view/home_view/student_view.dart';
+import 'package:attendu/view_model/attendance_view_model.dart';
 import 'package:attendu/view_model/student_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:drift/drift.dart' as d;
 
 class StudentCard extends StatefulWidget {
   const StudentCard({Key? key, this.studentData}) : super(key: key);
@@ -105,10 +107,24 @@ class _StudentCardState extends State<StudentCard> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
+
+                                //                StudentCompanion data = StudentCompanion(
+                                //   studentName: d.Value(_nameController.text),
+                                //   rollNo:
+                                //       d.Value(int.parse(_rollController.text)),
+                                //   collegeId: d.Value(widget.collegeId ??
+                                //       0), // Provide a default value or handle accordingly
+                                // );
                                         setState(() {
                                           containerColor = Colors.green;
-                                          isPresent = true;
+                                          // isPresent = true;
                                           totalDays++;
+                                          AttendanceCompanion attendanceCompanion=new AttendanceCompanion(isPresent: d.Value(isPresent=true),
+                                          attendanceDate: d.Value(DateTime.now()),
+                                        
+                                          );
+                                          
+                                          Provider.of<AttendanceViewModel>(context,listen: false).markStudent(attendanceCompanion);
                                         });
                                       },
                                       child: CircleAvatar(
@@ -117,15 +133,23 @@ class _StudentCardState extends State<StudentCard> {
                                         child: Icon(
                                           Icons.check,
                                           color: Colors.green,
+                                          
                                         ),
                                       ),
                                     ),
                                     SizedBox(width: 8),
                                     GestureDetector(
                                       onTap: () {
-                                        setState(() {
+                                    setState(() {
                                           containerColor = Colors.red;
-                                          isPresent = false;
+                                          // isPresent = true;
+                                          // totalDays++;
+                                          AttendanceCompanion attendanceCompanion=new AttendanceCompanion(isPresent: d.Value(isPresent=false),
+                                          attendanceDate: d.Value(DateTime.now()),
+                                        
+                                          );
+                                          
+                                          Provider.of<AttendanceViewModel>(context,listen: false).markStudent(attendanceCompanion);
                                         });
                                       },
                                       child: CircleAvatar(
